@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:storybook/recommended"
+  ], "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/react-in-jsx-scope": "off",
+    "jsx-ally/anchor-is-valid": "off",
+    "no-underscore-dangle" : "off"
+  }
+}
