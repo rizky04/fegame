@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import cx from "classnames";
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 export default function SignUpForm() {
     const [name, setName] = useState('');
@@ -16,8 +17,13 @@ export default function SignUpForm() {
         const userForm = {
             email, name, password
         }
-        localStorage.setItem('user-form', JSON.stringify(userForm));
-        router.push('/sign-up-photo');
+        if (!email || !name || !password) {
+            toast.error('Email, Nama dan Password wajid diisi !!!');
+            router.push('/sign-up');
+        }else{
+            localStorage.setItem('user-form', JSON.stringify(userForm));
+            router.push('/sign-up-photo');
+        }
       }
   return (
     <>

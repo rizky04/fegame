@@ -23,24 +23,30 @@ export default function SignUpPhoto() {
   const getCategoryList = useCallback(async () => {
     const data = await getGameCategory();
     setCategories(data);
+    console.log(data);
   }, [getGameCategory]);
 
   useEffect(() => {
     getCategoryList();
-  });
+  }, []);
 
   useEffect(() => {
     const getLocalForm = localStorage.getItem('user-form');
     setLocalFrom(JSON.parse(getLocalForm));
   }, []);
   const onSubmit = async() => {
+
+    if (!image || !favorite) {
+      toast.error('Data photo dan favorite wajid diisi!!');
+    }
+
   const localForm = await localStorage.getItem('user-form');
   const form = JSON.parse(localForm);
   const data = new FormData();
 
   data.append('image', image);
   data.append('email', form.email);
-  data.append('password', form.passwod);
+  data.append('password', form.password);
   data.append('phoneNumber', '083119482925');
   data.append('username', form.name);
   data.append('name', form.name);
@@ -51,9 +57,7 @@ export default function SignUpPhoto() {
   const result = await setSignUp(data);
   if (result?.error === 1) {
     toast.error(result.message);
-  }else if(data === null){
-    toast.error('data tidak boleh terisi');
-  } else {
+  }else {
     toast.success('Register Berhasil');
     router.push('/sign-up-success');
     localStorage.removeItem('user-form');

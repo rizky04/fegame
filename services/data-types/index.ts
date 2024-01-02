@@ -31,3 +31,20 @@ export interface NominalsTypes {
     coinName: string;
     price: number;
 }
+
+export interface signUpTypes {
+    image: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    username: string;
+    name: string;
+    role: string;
+    status: string;
+    favorite:string;
+}
+
+export interface loginTypes {
+    email: string;
+    password: string;
+}

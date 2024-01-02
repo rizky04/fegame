@@ -1,8 +1,32 @@
+import { setLogin } from '@/services/auth';
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/router';
+import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 
 
 export default function SignInForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const onSubmit = async () => {
+    const data = {
+      email,
+      password,
+    };
+
+    if (!email || !password) {
+      toast.error('Email dan Password wajid diisi!!');
+    }else{
+      const response = await setLogin(data);
+      if (response.error) {
+        toast.error(response.message)
+      }else{
+        toast.success('login berhasil');
+        router.push('/');
+      }
+    }
+  }
   return (
     <>
      <h2 className="text-4xl fw-bold color-palette-1 mb-10">
@@ -22,6 +46,8 @@ export default function SignInForm() {
                     name="email"
                     aria-describedby="email"
                     placeholder="Enter your email address"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
                 <div className="pt-30">
@@ -35,16 +61,19 @@ export default function SignInForm() {
                     name="password"
                     aria-describedby="password"
                     placeholder="Your password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
                   />
                 </div>
                 <div className="button-group d-flex flex-column mx-auto pt-50">
-                  <Link
+                  <button
                     className="btn btn-sign-in fw-medium text-lg text-white rounded-pill mb-16"
-                    href="/"
+                    onClick={onSubmit}
                     role="button"
+                    type="button"
                   >
                     Continue to Sign In
-                  </Link>
+                  </button>
                   {/* <!-- <button type="submit"
                                 className="btn btn-sign-in fw-medium text-lg text-white rounded-pill mb-16"
                                 role="button">Continue to Sign In</button> --> */}
