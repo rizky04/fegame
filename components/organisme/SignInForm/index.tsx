@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
 
 
 export default function SignInForm() {
@@ -20,9 +22,12 @@ export default function SignInForm() {
     }else{
       const response = await setLogin(data);
       if (response.error) {
-        toast.error(response.message)
+        toast.error(response.message);
       }else{
         toast.success('login berhasil');
+        const {token} = response.data;
+        const tokenBase64 = btoa(token);
+        Cookies.set('token', tokenBase64, {expires: 1});
         router.push('/');
       }
     }

@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from "next/link";
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 
 interface Authprops {
   isLogin? : boolean,
@@ -7,6 +9,13 @@ interface Authprops {
 
 export default function Auth(props: Partial<Authprops>) {
   const {isLogin} = props; 
+  useEffect(()=>{
+    const token = Cookies.get('token');
+    const jwtToken = atob(token);
+    const payload = jwtDecode(jwtToken);
+    const user = payload.player;
+    console.log('user :', user);
+  });
   if (isLogin) {
     return (
       <>
