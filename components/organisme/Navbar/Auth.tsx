@@ -9,7 +9,7 @@ interface Authprops {
 
 export default function Auth(props: Partial<Authprops>) {
   const {isLogin} = props; 
-  useEffect(()=>{
+  useEffect(()=> {
     const token = Cookies.get('token');
     const jwtToken = atob(token);
     const payload = jwtDecode(jwtToken);
