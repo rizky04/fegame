@@ -38,7 +38,6 @@ export default function Auth(props: Partial<Authprops>) {
                 alt=""
               />
             </Link>
-  
             <ul
               className="dropdown-menu border-0"
               aria-labelledby="dropdownMenuLink"
