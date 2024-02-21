@@ -1,21 +1,36 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from "next/link";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
+import Image from 'next/image';
+import { JWTPayloadTypes, UserTypes } from '@/services/data-types';
+import { useRouter } from 'next/router';
 
-interface Authprops {
-  isLogin? : boolean,
-}
-
-export default function Auth(props: Partial<Authprops>) {
-  const {isLogin} = props; 
+export default function Auth() {
+  const [isLogin, serIslogin] = useState(false);
+  const router = useRouter();
+  const [user, setUser] = useState({
+    avatar: ''
+  });
   useEffect(()=> {
     const token = Cookies.get('token');
-    const jwtToken = atob(token);
-    const payload = jwtDecode(jwtToken);
-    const user = payload.player;
+    if (token) {
+      const jwtToken = atob(token);
+      const payload : JWTPayloadTypes = jwtDecode(jwtToken);
+      const userFormPayload: UserTypes = payload.player;
+      const IMG = process.env.NEXT_PUBLIC_IMG;
+      user.avatar = `${IMG}/${userFormPayload.avatar}`;
+      serIslogin(true);
+      setUser(user);
+    }
     console.log('user :', user);
-  });
+  }, []);
+
+  const onLogout = () => {
+    Cookies.remove('token');
+    router.push('/');
+    serIslogin(false);
+  }
   if (isLogin) {
     return (
       <>
@@ -30,8 +45,8 @@ export default function Auth(props: Partial<Authprops>) {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <img
-                src="/img/avatar-1.png"
+              <Image
+                src={user.avatar}
                 className="rounded-circle"
                 width="40"
                 height="40"
@@ -57,10 +72,10 @@ export default function Auth(props: Partial<Authprops>) {
                   Account Settings
                 </Link>
               </li>
-              <li>
-                <Link className="dropdown-item text-lg color-palette-2" href="/sign-in">
+              <li onClick={onLogout}>
+                <a className="dropdown-item text-lg color-palette-2" href="#">
                   Log Out
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -71,7 +86,7 @@ export default function Auth(props: Partial<Authprops>) {
     return(
       <li className="nav-item my-auto">
       <Link className="btn btn-sign-in d-flex justify-content-center ms-lg-2 rounded-pill"
-          href="./src/sign-in.html" role="button">Sign
+          href="/sign-in" role="button">Sign
           In</Link>
     </li>
     );
