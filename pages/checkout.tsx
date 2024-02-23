@@ -1,11 +1,20 @@
 import CheckoutConfirmation from '@/components/organisme/CheckoutConfirmation'
 import CheckoutDetail from '@/components/organisme/CheckoutDetail'
 import ChekoutItem from '@/components/organisme/CheckoutItem'
+import { JWTPayloadTypes, UserTypes } from '@/services/data-types'
+import { jwtDecode } from 'jwt-decode'
+import { redirect } from 'next/dist/server/api-utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-export default function Checkout() {
+interface CheckoutProps {
+  user: UserTypes
+}
+
+export default function Checkout(props: CheckoutProps) {
+  const {user} = props;
+  console.log('user: ', user);
   return (
     <>
      {/* <!-- Checkout Content --> */}
@@ -29,4 +38,27 @@ export default function Checkout() {
     </>
   )
 }
+
+export async function getServerSideProps({req}) {
+  const {token} = req.cookies;
+  if(!token){
+    return {
+      redirect: {
+        destination: '/sign-in',
+        permanent : false,
+      }
+    }
+  }
+  const jwtToken = Buffer.from(token, 'base64').toString('ascii');
+  const payload: JWTPayloadTypes = jwtDecode(jwtToken);
+  const userFromPayload: UserTypes = payload.player;
+  const IMG = process.env.NEXT_PUBLIC_IMG;
+  userFromPayload.avatar = `${IMG}/${userFromPayload.avatar}`;
+  return {
+    props: {
+      user: userFromPayload
+    },
+  };
+}
+
 
