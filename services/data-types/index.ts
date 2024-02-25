@@ -61,3 +61,11 @@ export interface JWTPayloadTypes {
     player : UserTypes;
     iat: number;
 }
+
+export interface NominalItemProps {
+    _id: string;
+    cointQuantity: number;
+    coinName: string;
+    price: number;
+    onChange: () => void;
+  }

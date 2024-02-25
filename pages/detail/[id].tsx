@@ -22,6 +22,7 @@ const [payments, setPayments] = useState([]);
     const data = await getDetailVoucher(id);
     console.log('data : ', data);
     setDataITem(data.detail);
+    localStorage.setItem('data-item', JSON.stringify(data.detail));
     setNominals(data.detail.nominals);
     setPayments(data.payment);
   },[]);
