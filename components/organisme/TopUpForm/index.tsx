@@ -4,6 +4,7 @@ import PaymentITem from "./PaymentITem";
 import Link from "next/link";
 import { BanksTypes, NominalItemProps, NominalsTypes, PaymentType } from "@/services/data-types";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 interface TopFormProps {
   nominals: NominalsTypes[];
@@ -16,6 +17,9 @@ export default function TopUpForm(props: TopFormProps) {
   const [nominalItem, setNominalITem] = useState({});
   const [paymentItem, setPaymentItem] = useState({});
   const { nominals, payments } = props;
+  const router = useRouter();
+
+ 
 
   const onNominalItemChange = (data: NominalsTypes) => {
     setNominalITem(data);
@@ -41,6 +45,7 @@ export default function TopUpForm(props: TopFormProps) {
         verifyID, nominalItem, bankAccountName, paymentItem
       }
       localStorage.setItem('topUp-item', JSON.stringify(data));
+      router.push('/checkout');
     }
   };
   return (
