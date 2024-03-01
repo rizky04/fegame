@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { NumericFormat } from "react-number-format";
+
 
 export default function CheckoutDetail() {
   const [dataTopUp, setDataTopUp] = useState({
@@ -9,7 +11,7 @@ export default function CheckoutDetail() {
       coinName: '',
       _id: '',
     },
-    paymentITem: {
+    paymentItem: {
       payment: {
         type: '',
         _id: '',
@@ -24,7 +26,7 @@ export default function CheckoutDetail() {
     bankAccountName: '',
   });
   useEffect(() => {
-    const dataFromLocal = localStorage.getItem("data-topup");
+    const dataFromLocal = localStorage.getItem('topUp-item');
     const dataTopUpLocal = JSON.parse(dataFromLocal!);
     console.log("data topup:", dataTopUpLocal);
     setDataTopUp(dataTopUpLocal);
@@ -50,15 +52,37 @@ export default function CheckoutDetail() {
           Item <span className="purchase-details">{dataTopUp.nominalItem.coinQuantity} {dataTopUp.nominalItem.coinName}</span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
-          Price <span className="purchase-details">Rp {dataTopUp.nominalItem.price}</span>
+          Price <span className="purchase-details">
+            <NumericFormat
+            value={dataTopUp.nominalItem.price}
+            prefix="Rp. "
+            displayType="text"
+            decimalSeparator=","
+            thousandSeparator="."
+            />
+            </span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
-          Tax (10%) <span className="purchase-details">Rp {tax}</span>
+          Tax (10%) <span className="purchase-details">
+            <NumericFormat
+            value={tax}
+            prefix="Rp. "
+            displayType="text"
+            decimalSeparator=","
+            thousandSeparator="."
+            />
+          </span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
           Total{" "}
           <span className="purchase-details color-palette-4">
-            Rp {totalPrice}
+            <NumericFormat 
+            value={totalPrice}
+            prefix="Rp. "
+            displayType="text"
+            decimalSeparator=","
+            thousandSeparator="."
+            />
           </span>
         </p>
       </div>
@@ -71,18 +95,18 @@ export default function CheckoutDetail() {
           <span className="purchase-details">{dataTopUp.bankAccountName}</span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
-          Type <span className="payment-details">{dataTopUp.paymentITem.payment.type}</span>
+          Type <span className="payment-details">{dataTopUp.paymentItem.payment.type}</span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
-          Bank Name <span className="payment-details">{dataTopUp.paymentITem.bank.bankName}</span>
+          Bank Name <span className="payment-details">{dataTopUp.paymentItem.bank.bankName}</span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
           Bank Account Name{" "}
-          <span className="payment-details">{dataTopUp.paymentITem.bank.name}</span>
+          <span className="payment-details">{dataTopUp.paymentItem.bank.name}</span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
           Bank Number{" "}
-          <span className="payment-details">{dataTopUp.paymentITem.bank.noRekening}</span>
+          <span className="payment-details">{dataTopUp.paymentItem.bank.noRekening}</span>
         </p>
       </div>
     </>
