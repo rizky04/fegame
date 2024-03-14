@@ -4,7 +4,9 @@ interface CallAPIProps extends AxiosRequestConfig {
     token?: boolean;
 }
 
-export default async function callAPI({url, method, data, token}: CallAPIProps) {
+export default async function callAPI({
+    url, method, data, token
+}: CallAPIProps) {
     let headers = {};
     if (token) {
         const tokenCookies = Cookies.get('token');

@@ -10,6 +10,7 @@ export default function CheckoutConfirmation() {
   const onSubmit = async () => {
     const dataItemLocal = localStorage.getItem('data-item');
     const dataTopUpLocal = localStorage.getItem('topUp-item');
+    
     const dataItem = JSON.parse(dataItemLocal!);
     const dataTopup = JSON.parse(dataTopUpLocal!);
     if (!checkbox) {
@@ -23,8 +24,8 @@ export default function CheckoutConfirmation() {
       name: dataTopup.bankAccountName,
       accountUser: dataTopup.verifyID,
     };
-    console.log(data);
     const response = await setCheckout(data);
+    console.log(response);
     if (response.error) {
       toast.error(response.message);
     }else{

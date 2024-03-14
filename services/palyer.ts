@@ -28,7 +28,7 @@ export async function getGameCategory(){
 
 export async function setCheckout(data: CheckoutTypes){
     const url = `${ROOT_API}/${API_VERSION}/players/checkout`;
-
+   
     return callAPI({
         url,
         method: 'POST',
