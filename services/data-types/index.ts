@@ -71,10 +71,10 @@ export interface NominalItemProps {
   }
 
 export interface CheckoutTypes {
-    voucher : string;
-    nominal : string;
-    payment : string;
-    bank : string;
-    name : string;
-    accountUser : string;
+    voucher: string;
+    nominal: string;
+    payment: string;
+    bank: string;
+    name: string;
+    accountUser: string;
 }
