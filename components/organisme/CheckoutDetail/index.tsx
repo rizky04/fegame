@@ -3,6 +3,8 @@ import { NumericFormat } from "react-number-format";
 
 
 export default function CheckoutDetail() {
+  const [verifyID, setVerifyID] = useState('');
+  const [verifyID2, setVerifyID2] = useState('');
   const [dataTopUp, setDataTopUp] = useState({
     verifyID: "",
     nominalItem: {
@@ -35,10 +37,50 @@ export default function CheckoutDetail() {
   const itemPrice = dataTopUp.nominalItem.price;
   const tax = dataTopUp.nominalItem.price * (10/100);
   const totalPrice = itemPrice + tax;
+  const totalnya = (Number(verifyID) + totalPrice).toFixed(2);
 
   return (
     <>
       <div className="purchase pt-md-50 pt-30">
+      <div className="pt-md-50 pt-30">
+        <div className="">
+          <label className="form-label text-lg fw-medium color-palette-1 mb-10">
+            Verify ID
+          </label>
+          <input
+            type="number"
+            className="form-control rounded-pill text-lg"
+            id="ID"
+            name="ID"
+            aria-describedby="verifyID"
+            placeholder="Enter your ID"
+            value={verifyID}
+            onChange={(event) => setVerifyID(event.target.value)}
+          />
+        </div>
+        <div className="">
+          <label className="form-label text-lg fw-medium color-palette-1 mb-10">
+            total
+          </label>
+          <NumericFormat
+            value={totalnya}
+            prefix="Rp. "
+            displayType="text"
+            decimalSeparator=","
+            thousandSeparator="."
+            />
+          {/* <input
+            type="number"
+            className="form-control rounded-pill text-lg"
+            id="ID"
+            name="ID"
+            aria-describedby="verifyID"
+            placeholder="Enter your ID"
+            value={}
+            onChange={(event) => setVerifyID2(event.target.value)}
+          /> */}
+        </div>
+      </div>
         <h2 className="fw-bold text-xl color-palette-1 mb-20">
           Purchase Details
         </h2>
