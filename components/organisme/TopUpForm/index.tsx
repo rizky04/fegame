@@ -3,8 +3,6 @@ import NominalItem from "./NominalItem";
 import PaymentITem from "./PaymentITem";
 import Link from "next/link";
 import { BanksTypes, NominalItemProps, NominalsTypes, PaymentType } from "@/services/data-types";
-import { toast } from "react-toastify";
-import { useRouter } from "next/router";
 
 interface TopFormProps {
   nominals: NominalsTypes[];
@@ -12,41 +10,23 @@ interface TopFormProps {
 }
 
 export default function TopUpForm(props: TopFormProps) {
-  const [verifyID, setVerifyID] = useState('');
-  const [bankAccountName, setBankAccountName] = useState('');
-  const [nominalItem, setNominalITem] = useState({});
-  const [paymentItem, setPaymentItem] = useState({});
+  const [verifyID, setVerifyID] = useState("");
+  const [bankAccountName, setBankAccountName] = useState("");
   const { nominals, payments } = props;
-  const router = useRouter();
-
- 
 
   const onNominalItemChange = (data: NominalsTypes) => {
-    setNominalITem(data);
+    localStorage.setItem('nominal-item', JSON.stringify(data));
   }
 
   const onPaymentItemChange = (payment: PaymentType, bank: BanksTypes) => {
     const data = {
         payment, bank
     };
-    setPaymentItem(data);
+    localStorage.setItem('payment-item', JSON.stringify(data));
   };
 
   const onSubmit = () =>{
-    console.log('verifyID :', verifyID);
-    console.log('nominalItem :', nominalItem);
-    console.log('bankAcoount :', bankAccountName);
-    console.log('peymentItem :', paymentItem);
-    if (verifyID === '' || bankAccountName === '' || nominalItem === '' || paymentItem === '' ) {
-      toast.error('Data Harap diisi');
-    }else{
-      toast.success('transaksi berhasil');
-      const data = {
-        verifyID, nominalItem, bankAccountName, paymentItem
-      }
-      localStorage.setItem('topUp-item', JSON.stringify(data));
-      router.push('/checkout');
-    }
+
   };
   return (
     <form action="./checkout.html" method="POST">

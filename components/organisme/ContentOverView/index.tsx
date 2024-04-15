@@ -4,11 +4,13 @@ import Category from "./Category";
 import TableRow from "./TableRow";
 import { getMemberOverview } from "@/services/palyer";
 import { toast } from "react-toastify";
+import { HistoryTransactionTypes, TopUpCategoriesTypes } from "@/services/data-types";
 
 export default function ContentOverView() {
   const [count, setCount] = useState([]);
   const [data, setData] = useState([]);
-  useEffect(async () => {
+
+  const dataNya = useCallback(async () => {
     const response = await getMemberOverview();
     if (response.error) {
       toast.error(response.message);
@@ -18,6 +20,10 @@ export default function ContentOverView() {
       console.log('data :', response.data.data)
       console.log('count :', response.data.count)
     }
+  }, [])
+
+  useEffect(()=>{
+    dataNya();
   }, []);
 
   return (
@@ -31,9 +37,9 @@ export default function ContentOverView() {
             </p>
             <div className="main-content">
               <div className="row">
-                {count.map((item: any) => (
+                {count.map((item: TopUpCategoriesTypes) => (
                   // eslint-disable-next-line react/jsx-key
-                  <Category key={''} icon="ic-dekstop" nominal={item.value}>
+                  <Category key={item._id} icon="ic-dekstop" nominal={item.value}>
                     {item.name}
                     <br />
                   </Category>
@@ -58,8 +64,9 @@ export default function ContentOverView() {
                   </tr>
                 </thead>
                 <tbody>
-                    {data.map((item: any) => (
+                    {data.map((item: HistoryTransactionTypes) => (
                         <TableRow
+                        key={item._id}
                                 image={item.historyVoucherTopup.thumbnail}
                                 title={item.historyVoucherTopup.gameName}
                                 categori={item.historyVoucherTopup.category}
