@@ -2,7 +2,7 @@ import ContentOverView from '@/components/organisme/ContentOverView'
 import SideBar from '@/components/organisme/SideBar'
 import { JWTPayloadTypes, UserTypes } from '@/services/data-types'
 import { jwtDecode } from 'jwt-decode'
-import { redirect } from 'next/dist/server/api-utils'
+// import { redirect } from 'next/dist/server/api-utils'
 import React from 'react'
 
 interface CheckoutProps {
