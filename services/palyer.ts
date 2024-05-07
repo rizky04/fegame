@@ -5,6 +5,7 @@ import { CheckoutTypes } from "./data-types";
 const ROOT_API = process.env.NEXT_PUBLIC_API;
 const API_VERSION = 'api/v1';
 
+
 export async function getFeaturedGame(){
     const URL = 'players/landingPage';
     const response = await axios.get(`${ROOT_API}/${API_VERSION}/${URL}`);
@@ -46,3 +47,4 @@ export async function getMemberOverview(){
     token: true,
     });
 }
+
